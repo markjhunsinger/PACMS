@@ -30,11 +30,17 @@ Route::get('/', function () {
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    // dashboard
     Route::get('/', 'DashboardController@index');
     Route::get('dashboard', 'DashboardController@index');
     Route::get('settings', 'DashboardController@settings');
 
+    // players
     Route::resource('players', 'PlayerController');
+
+    // characters
+    Route::get('characters/create/{playerID}', 'CharacterController@create');
+    Route::get('characters/print-character-card/{characterID', 'CharacterController@printCharacterCard');
     Route::resource('characters', 'CharacterController');
 
     Route::get('/home', 'HomeController@index');

@@ -6,6 +6,8 @@ use App\Character;
 use App\State;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\UpdatePlayerRequest;
+
 use App\Player;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -74,29 +76,12 @@ class PlayerController extends Controller
         return view('editPlayer', $data);
     }
 
-    public function update($id) {
+    public function update(UpdatePlayerRequest $request, $id) {
         $player = Player::findOrFail($id);
 
-        $rules = array(
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'email' => 'required|email',
-            'zip' => 'digits:5',
-            'service_points' => 'integer|between:0,1000',
-            'event_credits' => 'integer|between:0,1000'
-        );
-
-        $validator = Validator::make(Input::all(), $rules);
-
-        if ($validator->fails()) {
-            $messages = $validator->messages();
-            return Redirect::to('players/' . $player->id . '/edit')->withErrors($messages)->withInput(Input::all());
-        }
-        else {
-            $player->fill(Input::all());
-            $player->save();
-            return Redirect::to('players/' . $player->id);
-        }
+        $player->fill(Input::all());
+        $player->save();
+        return Redirect::to('players/' . $player->id);
     }
 
     public function create() {
@@ -114,11 +99,12 @@ class PlayerController extends Controller
         return view('newPlayer', $data);
     }
 
+    // TODO: eventually convert to StorePlayerRequest for validation
     public function store(Player $player) {
         $rules = array(
             'last_name' => 'required',
             'first_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'email',
             'zip' => 'digits:5',
             'service_points' => 'integer|between:0,1000',
             'event_credits' => 'integer|between:0,1000'

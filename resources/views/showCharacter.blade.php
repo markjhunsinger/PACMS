@@ -13,6 +13,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-users fa-fw"></i> Character Information
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a href="{{ url('characters/print-character-card/', $character->id) }}" title="Print Card"><i class="fa fa-print"></i></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         {!! $characterInfo !!}

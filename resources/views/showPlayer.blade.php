@@ -32,7 +32,7 @@
                         <i class="fa fa-users fa-fw"></i> Characters
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="{{ url('/characters/create') }}"><input type="button" class="btn btn-info btn-xs" value="New Character"></a>
+                                <a href="{{ url('characters/create', $player->id) }}"><input type="button" class="btn btn-info btn-xs" value="New Character"></a>
                             </div>
                         </div>
                     </div>
