@@ -40,7 +40,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // characters
     Route::get('characters/create/{playerID}', 'CharacterController@create');
-    Route::get('characters/print-character-card/{characterID', 'CharacterController@printCharacterCard');
+    Route::get('characters/print/{characterID}', 'CharacterController@printCharacterCard')->name('characters.print');
     Route::resource('characters', 'CharacterController');
 
     Route::get('/home', 'HomeController@index');

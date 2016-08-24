@@ -11,14 +11,17 @@
         "laravelcollective/html": "^5.2",
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
-        "gbrock/laravel-table": "^0.3.4"
+        "gbrock/laravel-table": "^0.3.4",
+        "barryvdh/laravel-dompdf": "^0.7.0",
+        "itbz/fpdi": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*"
+        "symfony/dom-crawler": "2.8.*|3.0.*",
+        "anouar/fpdf": "1.0.2"
     },
     "autoload": {
         "classmap": [

@@ -148,9 +148,12 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        \fpdi\FPDI::class,
 
         'Collective\Html\HtmlServiceProvider',
         'Gbrock\Table\Providers\TableServiceProvider',
+        'Anouar\Fpdf\FpdfServiceProvider',
 
         /*
          * Application Service Providers...
@@ -209,6 +212,9 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
         'Input' => Illuminate\Support\Facades\Input::class,
+
+        'Fpdf'    => 'Anouar\Fpdf\Facades\Fpdf',
+        'Fpdi'    => \fpdi\FPDI::class,
     ],
 
 ];
