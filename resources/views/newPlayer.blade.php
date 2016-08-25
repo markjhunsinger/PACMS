@@ -118,14 +118,14 @@
                                 <div class="form-group @if ($errors->has('service_points')) has-error @endif">
                                     {{ Form::label('service_points', 'Service Points', array('class' => 'col-lg-4 control-label')) }}
                                     <div class="col-lg-8">
-                                        {{ Form::text('service_points', null, array('class' => 'form-control')) }}
+                                        {{ Form::number('service_points', null, array('class' => 'form-control')) }}
                                         @if ($errors->has('service_points')) <p class="help-block">{{ $errors->first('service_points') }}</p> @endif
                                     </div>
                                 </div>
                                 <div class="form-group @if ($errors->has('event_credits')) has-error @endif">
                                     {{ Form::label('event_credits', 'Event Credits', array('class' => 'col-lg-4 control-label')) }}
                                     <div class="col-lg-8">
-                                        {{ Form::text('event_credits', null, array('class' => 'form-control')) }}
+                                        {{ Form::number('event_credits', null, array('class' => 'form-control')) }}
                                         @if ($errors->has('event_credits')) <p class="help-block">{{ $errors->first('event_credits') }}</p> @endif
                                     </div>
                                 </div>

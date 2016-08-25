@@ -34,6 +34,7 @@ class StoreCharacterRequest extends Request
             'pre' => 'required|integer',
             'end' => 'required|integer',
             'foc' => 'required|integer',
+            'rp_points' => 'integer'
         ];
     }
 
@@ -42,8 +43,8 @@ class StoreCharacterRequest extends Request
         return [
             'character_name.required' => 'Character Name is required.',
             'character_name.string' => 'Character Name must be a string.',
-            'character_number.required' => 'Character Number is required.',
-            'character_number.string' => 'Character Number must be a string.',
+            'character_number.required' => 'Badge Number is required.',
+            'character_number.string' => 'Badge Number must be a string.',
             'build_unspent.required' => 'Unspent Build is required.',
             'build_unspent.integer' => 'Unspent Build must be a valid integer.',
             'build_total.required' => 'Total Build is required.',
@@ -60,6 +61,7 @@ class StoreCharacterRequest extends Request
             'end.integer' => 'Endurance must be a valid integer.',
             'foc.required' => 'Focus is required.',
             'foc.integer' => 'Focus must be a valid integer.',
+            'rp_points.integer' => 'RP Points must be a valid integer.'
         ];
     }
 }

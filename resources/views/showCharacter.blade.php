@@ -25,6 +25,18 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-users fa-fw"></i> Character Notes
+                    </div>
+                    <div class="panel-body">
+                        Under construction.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

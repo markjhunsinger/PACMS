@@ -13,7 +13,7 @@ class AddCharacterInfoToCharactersTable extends Migration
     public function up()
     {
         Schema::table('characters', function ($table) {
-            $table->integer('character_number');
+            $table->string('character_number');
             $table->integer('build_unspent');
             $table->integer('build_total');
             $table->integer('body');
