@@ -15,6 +15,7 @@
                         <i class="fa fa-users fa-fw"></i> Character Information
                         <div class="pull-right">
                             <div class="btn-group">
+                                <a href="{{ route('characters.edit', $character->id) }}" title="Edit Character"><button type="button" class="btn btn-info btn-xs">Edit Character</button></a>
                                 <a href="{{ route('characters.print', $character->id) }}" title="Print Card" target="_blank"><i class="fa fa-print"></i></a>
                             </div>
                         </div>

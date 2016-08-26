@@ -7,6 +7,7 @@ use App\Character;
 use App\Player;
 
 use App\Http\Requests\StoreCharacterRequest;
+use App\Http\Requests\UpdateCharacterRequest;
 
 use fpdi\FPDI;
 use Illuminate\Support\Facades\Input;
@@ -41,6 +42,26 @@ class CharacterController extends Controller
         $character->updated_by = 'Colony Alpha Staff';
         $character->save();
 
+        return Redirect::to('characters/' . $character->id);
+    }
+
+    public function edit($id)
+    {
+        $character = Character::findOrFail($id);
+
+        $data = array(
+            'player' => $character->player,
+            'character' => $character,
+        );
+
+        return view('editCharacter', $data);
+    }
+
+    public function update(UpdateCharacterRequest $request, $id) {
+        $character = Character::findOrFail($id);
+
+        $character->fill(Input::all());
+        $character->save();
         return Redirect::to('characters/' . $character->id);
     }
 
@@ -106,9 +127,9 @@ class CharacterController extends Controller
         $pdf->SetXY(160, $yCoord += $incrementer);
         $pdf->Write(0, $data['character']->stress_level);
 
-        // roleplaying points TODO: needs database entry, OOPS!
+        // roleplaying points
         $pdf->SetXY(160, $yCoord += $incrementer);
-        //$pdf->Write(0, $data['character']->rp_points);
+        $pdf->Write(0, $data['character']->rp_points);
 
         // deaths
         $pdf->SetXY(160, $yCoord += $incrementer);
@@ -128,5 +149,10 @@ class CharacterController extends Controller
 
         // skills (needs a lot of work)
         // skill queue (also needs a lot of work)
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetXY(50, 430);
+        $pdf->MultiCell(0, 15, $data['character']->skills);
+
+        $pdf->SetFont('Arial', '', 14);
     }
 }

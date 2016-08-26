@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLastPlayedToCharactersTable extends Migration
+class AddRpPointsToCharactersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddLastPlayedToCharactersTable extends Migration
     public function up()
     {
         Schema::table('characters', function ($table) {
-            $table->string('last_played');
+            $table->integer('rp_points');
         });
     }
 
@@ -25,7 +25,7 @@ class AddLastPlayedToCharactersTable extends Migration
     public function down()
     {
         Schema::table('characters', function ($table) {
-            $table->dropColumn('last_played');
+            $table->dropColumn('rp_points');
         });
     }
 }

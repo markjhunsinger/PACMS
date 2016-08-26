@@ -32,7 +32,7 @@ class PlayerController extends Controller
 
     public function index()
     {
-        $players = Player::sorted()->paginate();
+        $players = Player::sorted('last_name')->paginate();
         $playersTable = Table::create($players, ['last_name', 'first_name']);
         $playersTable->setView('tables.playerstable');
 

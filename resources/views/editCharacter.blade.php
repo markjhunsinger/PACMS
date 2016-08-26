@@ -5,19 +5,22 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><a href="{{ url('players/' . $player->id) }}">{{ $player->first_name . ' ' . $player->last_name }}</a><i class="fa fa-angle-right fa-fw"></i>New Character</h1>
+                <h1 class="page-header"><a href="{{ url('players/') }}">Players</a><i class="fa fa-angle-right fa-fw"></i><a href="{{ url('players/' . $player->id) }}">{{ $player->first_name }} {{ $player->last_name }}</a><i class="fa fa-angle-right fa-fw"></i><a href="{{ url('characters/' . $character->id) }}">{{ $character->character_name }}</a><i class="fa fa-angle-right fa-fw"></i>Edit Character</h1>
             </div>
+            <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-users fa-fw"></i> New Character Information
+                        <i class="fa fa-users fa-fw"></i> Edit Character Information
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        {{ Form::open(array('route' => 'characters.store')) }}
+                        {{ Form::model($character, ['method' => 'PATCH', 'route' => ['characters.update', $character->id]]) }}
+
                         <div class="col-lg-6">
                             <div class="form-horizontal">
                                 <div class="form-group @if ($errors->has('character_name')) has-error @endif">
@@ -28,10 +31,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group @if ($errors->has('character_number')) has-error @endif">
-                                    {{ Form::label('character_number', 'Badge Number', array('class' => 'col-lg-4 control-label')) }}
+                                    {{ Form::label('character_number', 'Character Number', array('class' => 'col-lg-4 control-label')) }}
                                     <div class="col-lg-8">
                                         {{ Form::text('character_number', null, array('class' => 'form-control')) }}
                                         @if ($errors->has('character_number')) <p class="help-block">{{ $errors->first('character_number') }}</p> @endif
+                                    </div>
+                                </div>
+                                <div class="form-group @if ($errors->has('last_played')) has-error @endif">
+                                    {{ Form::label('last_played', 'Last Played', array('class' => 'col-lg-4 control-label')) }}
+                                    <div class="col-lg-8">
+                                        {{ Form::text('last_played', null, array('class' => 'form-control')) }}
+                                        @if ($errors->has('last_played')) <p class="help-block">{{ $errors->first('last_played') }}</p> @endif
                                     </div>
                                 </div>
                                 <div class="form-group @if ($errors->has('body')) has-error @endif">
@@ -49,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group @if ($errors->has('build_unspent')) has-error @endif">
-                                    {{ Form::label('build_unspent', 'Unspent Build', array('class' => 'col-lg-4 control-label')) }}
+                                    {{ Form::label('build_unspent', 'Build Unspent', array('class' => 'col-lg-4 control-label')) }}
                                     <div class="col-lg-8">
                                         {{ Form::number('build_unspent', null, array('class' => 'form-control')) }}
                                         @if ($errors->has('build_unspent')) <p class="help-block">{{ $errors->first('build_unspent') }}</p> @endif
@@ -71,6 +81,13 @@
                                     <div class="col-lg-8">
                                         {{ Form::number('stress_level', null, array('class' => 'form-control')) }}
                                         @if ($errors->has('stress_level')) <p class="help-block">{{ $errors->first('stress_level') }}</p> @endif
+                                    </div>
+                                </div>
+                                <div class="form-group @if ($errors->has('rp_points')) has-error @endif">
+                                    {{ Form::label('rp_points', 'RP Points', array('class' => 'col-lg-4 control-label')) }}
+                                    <div class="col-lg-8">
+                                        {{ Form::number('rp_points', null, array('class' => 'form-control')) }}
+                                        @if ($errors->has('rp_points')) <p class="help-block">{{ $errors->first('rp_points') }}</p> @endif
                                     </div>
                                 </div>
                                 <div class="form-group @if ($errors->has('deaths')) has-error @endif">
@@ -105,16 +122,19 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                {{ Form::hidden('player_id', $player->id) }}
-                                {{ Form::submit('Save Character', array('class' => 'btn btn-info pull-right')) }}
+                                {{ Form::submit('Update Character', array('class' => 'btn btn-info pull-right')) }}
                             </div>
                         </div>
                     </div>
 
                     {{ Form::close() }}
+                    <!-- /.panel-body -->
                 </div>
             </div>
         </div>
+        <!-- /.row -->
+
     </div>
+    <!-- /#page-wrapper -->
 
 @endsection
