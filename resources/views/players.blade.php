@@ -1,38 +1,30 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Players</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-users fa-fw"></i>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="{{ url('/players/create') }}"><input type="button" class="btn btn-info btn-xs" value="New Player"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        {!! $playersTable->render() !!}
-                    </div>
-                    <!-- /.panel-body -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                	Players
+                	<div class="pull-right">
+                		<a href="{{ url('players/create') }}">Add New Player</a>
+                	</div>
+                </div>
+                
+                <div class="panel-body">
+                	<ul class="list-group">
+                    	@forelse ($players as $player)
+                    		<li class="list-group-item">
+                    			<a href="players/{!! $player->id !!}">{{ $player->last_name }}, {{ $player->first_name }}</a>
+                    		</li>
+                    	@empty
+                    		No spheres.
+                    	@endforelse
+                	</ul>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
-
     </div>
-    <!-- /#page-wrapper -->
-
+</div>
 @endsection

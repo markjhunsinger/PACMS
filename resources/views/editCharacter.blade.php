@@ -1,140 +1,96 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header"><a href="{{ url('players/') }}">Players</a><i class="fa fa-angle-right fa-fw"></i><a href="{{ url('players/' . $player->id) }}">{{ $player->first_name }} {{ $player->last_name }}</a><i class="fa fa-angle-right fa-fw"></i><a href="{{ url('characters/' . $character->id) }}">{{ $character->character_name }}</a><i class="fa fa-angle-right fa-fw"></i>Edit Character</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-users fa-fw"></i> Edit Character Information
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        {{ Form::model($character, ['method' => 'PATCH', 'route' => ['characters.update', $character->id]]) }}
-
-                        <div class="col-lg-6">
-                            <div class="form-horizontal">
-                                <div class="form-group @if ($errors->has('character_name')) has-error @endif">
-                                    {{ Form::label('character_name', 'Character Name', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::text('character_name', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('character_name')) <p class="help-block">{{ $errors->first('character_name') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('character_number')) has-error @endif">
-                                    {{ Form::label('character_number', 'Character Number', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::text('character_number', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('character_number')) <p class="help-block">{{ $errors->first('character_number') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('last_played')) has-error @endif">
-                                    {{ Form::label('last_played', 'Last Played', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::text('last_played', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('last_played')) <p class="help-block">{{ $errors->first('last_played') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('body')) has-error @endif">
-                                    {{ Form::label('body', 'Body', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('body', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('body')) <p class="help-block">{{ $errors->first('body') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('build_total')) has-error @endif">
-                                    {{ Form::label('build_total', 'Total Build', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('build_total', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('build_total')) <p class="help-block">{{ $errors->first('build_total') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('build_unspent')) has-error @endif">
-                                    {{ Form::label('build_unspent', 'Build Unspent', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('build_unspent', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('build_unspent')) <p class="help-block">{{ $errors->first('build_unspent') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('skills')) has-error @endif">
-                                    {{ Form::label('skills', 'Skills', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::textarea('skills', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('skills')) <p class="help-block">{{ $errors->first('skills') }}</p> @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-horizontal">
-                                <div class="form-group @if ($errors->has('stress_level')) has-error @endif">
-                                    {{ Form::label('stress_level', 'Stress Level', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('stress_level', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('stress_level')) <p class="help-block">{{ $errors->first('stress_level') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('rp_points')) has-error @endif">
-                                    {{ Form::label('rp_points', 'RP Points', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('rp_points', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('rp_points')) <p class="help-block">{{ $errors->first('rp_points') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('deaths')) has-error @endif">
-                                    {{ Form::label('deaths', 'Deaths', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('deaths', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('deaths')) <p class="help-block">{{ $errors->first('deaths') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('pre')) has-error @endif">
-                                    {{ Form::label('pre', 'Presence', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('pre', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('pre')) <p class="help-block">{{ $errors->first('pre') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('end')) has-error @endif">
-                                    {{ Form::label('end', 'Endurance', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('end', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('end')) <p class="help-block">{{ $errors->first('end') }}</p> @endif
-                                    </div>
-                                </div>
-                                <div class="form-group @if ($errors->has('foc')) has-error @endif">
-                                    {{ Form::label('foc', 'Focus', array('class' => 'col-lg-4 control-label')) }}
-                                    <div class="col-lg-8">
-                                        {{ Form::number('foc', null, array('class' => 'form-control')) }}
-                                        @if ($errors->has('foc')) <p class="help-block">{{ $errors->first('foc') }}</p> @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                {{ Form::submit('Update Character', array('class' => 'btn btn-info pull-right')) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    {{ Form::close() }}
-                    <!-- /.panel-body -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                	<a href="{!! url('players') !!}">Players</a> <i class="fa fa-angle-right fa-fw"></i> <a href="{!! url('players') !!}/{!! $character->player->id !!}">{!! $character->player->last_name !!}, {!! $character->player->first_name !!}</a> <i class="fa fa-angle-right fa-fw"></i> <a href="{!! url('characters') !!}/{!! $character->id !!}">{!! $character->character_name !!}</a> <i class="fa fa-angle-right fa-fw"></i> Edit
+                </div>
+                <div class="panel-body">
+                	{!! Form::model($character, ['method' => 'PATCH', 'route' => ['characters.update', $character->id]]) !!}
+                	@if (count($errors) > 0)
+					    <div class="alert alert-danger">
+					        <ul>
+					            @foreach ($errors->all() as $error)
+					                <li>{{ $error }}</li>
+					            @endforeach
+					        </ul>
+					    </div>
+					@endif
+                	<div class="form-group">
+                		{!! Form::label('character_name', 'Character Name', ['class' => 'control-label']) !!}
+                		{!! Form::text('character_name', null, ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('race', 'Race', ['class' => 'control-label']) !!}
+                		<select id="race" name="race_id" class="form-control">
+                			@foreach ($races as $race)
+                				<option value="{!! $race->id !!}" {!! ($character->race_id == $race->id) ? 'selected' : '' !!}>{!! $race->race_name !!}</option>
+                			@endforeach
+                		</select>
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('build_unspent', 'Build Unspent', ['class' => 'control-label']) !!}
+                		{!! Form::text('build_unspent', null, ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('body', 'Body', ['class' => 'control-label']) !!}
+                		{!! Form::number('body', null, ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('deaths', 'Deaths', ['class' => 'control-label']) !!}
+                		{!! Form::number('deaths', null, ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('dex', 'Dexterity', ['class' => 'control-label']) !!}
+                		{!! Form::number('dex', null, ['class' => 'form-control']) !!}
+                		{!! Form::select('dex_ratio', $apRatioArray, $abilityPointRatios['dex'], ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('end', 'Endurance', ['class' => 'control-label']) !!}
+                		{!! Form::number('end', null, ['class' => 'form-control']) !!}
+                		{!! Form::select('end_ratio', $apRatioArray, $abilityPointRatios['end'], ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('pre', 'Presence', ['class' => 'control-label']) !!}
+                		{!! Form::number('pre', null, ['class' => 'form-control']) !!}
+                		{!! Form::select('pre_ratio', $apRatioArray, $abilityPointRatios['pre'], ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('last_played', 'Last Played', ['class' => 'control-label']) !!}
+                		{!! Form::date('last_played', \Carbon\Carbon::parse($character->last_played)->format('Y-m-d'), ['class' => 'form-control']) !!}
+                	</div>
+                	<div class="form-group">
+                		{!! Form::label('rp_points', 'Roleplaying Points', ['class' => 'control-label']) !!}
+                		{!! Form::number('rp_points', null, ['class' => 'form-control']) !!}
+                	</div>
+                	@for ($i = 0; $i < 3; $i++)
+						<div class="form-group">
+	                		{!! Form::label('sphere' . ($i+1), 'Sphere ' . ($i+1), ['class' => 'control-label']) !!}
+	                		<select id="sphere{!! $i+1 !!}" name="spheres[]" class="form-control">
+	                			<option value="0">None</option>
+	                			@forelse ($spheres as $sphere)
+	                				<option value="{!! $sphere->id !!}" {!! ($sphere->id == $characterSpheres[$i]['sphere_id']) ? 'selected' : '' !!}>{!! $sphere->sphere_name !!}</option>
+		                    	@empty
+		                    		No spheres.
+		                    	@endforelse
+	                		</select>
+	                		<input name="sphere_dates[]" type="date" value="{!! $characterSpheres[$i]['date'] !!}" class="form-control">
+                		</div>
+					@endfor
+					<div class="form-group">
+						{!! Form::label('ration', 'Ration?', ['class' => 'control-label']) !!}
+                		{!! Form::select('ration', ['1' => 'Yes', '0' => 'No'], Input::old('ration', ($character->ration == 1) ? 1 : 0), ['class' => 'form-check-input']) !!}
+					</div>
+                	<div class="form-group">
+                		{!! Form::submit('Save', ['class' => 'btn btn-info pull-right']) !!}
+                	</div>
+                	{!! Form::close() !!}
                 </div>
             </div>
         </div>
-        <!-- /.row -->
-
     </div>
-    <!-- /#page-wrapper -->
-
+</div>
 @endsection

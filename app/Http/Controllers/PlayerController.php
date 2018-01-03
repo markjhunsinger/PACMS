@@ -2,124 +2,120 @@
 
 namespace App\Http\Controllers;
 
-use App\Character;
-use App\State;
-use Illuminate\Http\Request;
-
-use App\Http\Requests\UpdatePlayerRequest;
-
 use App\Player;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Validator;
-
-/* Gbrock table namespaces */
-use Gbrock\Table\Facades\Table;
-use Gbrock\Table\Traits\Sortable;
-
-use Form;
-use View;
+use App\Http\Requests\StorePlayer;
+use App\Http\Requests\UpdatePlayer;
+use Illuminate\Http\Request;
 use Input;
-use Illuminate\Support\Facades\Redirect;
+use Redirect;
 
 class PlayerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+	
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $players = Player::sorted('last_name')->paginate();
-        $playersTable = Table::create($players, ['last_name', 'first_name']);
-        $playersTable->setView('tables.playerstable');
-
-        $data = array(
-            'playersTable' => $playersTable
-        );
-
-        return view('players', $data);
+    	// get all players from the database
+    	$players = Player::orderBy('last_name', 'asc')->get();
+    	
+    	$data['players'] = $players;
+    	
+    	return view('players', $data);
     }
 
-    public function show($id) {
-        $player = Player::findOrFail($id);
-
-        $characters = Character::where('player_id', $id)->orderBy('character_name', 'asc')->get();
-        $charactersTable = Table::create($characters, ['character_name']);
-        $charactersTable->setView('tables.characterstable');
-
-        $data = array(
-            'player' => $player,
-            'charactersTable' => $charactersTable
-        );
-
-        return view('showPlayer', $data)->nest('playerInfo', 'child.playerInfo', $data);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+    	$data = [];
+    	
+    	return view('createPlayer', $data);
     }
 
-    public function edit($id) {
-        $player = Player::findOrFail($id);
-
-        // TODO (mark): redo this section to just pull in the states correctly
-        $states = State::all(array('code', 'name'));
-        $newStates = array();
-        foreach ($states as $state) {
-            $newStates[$state['code']] = $state['name'];
-        }
-
-        $data = array(
-            'player' => $player,
-            'states' => $newStates
-        );
-
-        return view('editPlayer', $data);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StorePlayer $request, Player $player)
+    {
+    	$player->fill(Input::all());
+    	$player->save();
+    	
+    	return Redirect::to('players');
     }
 
-    public function update(UpdatePlayerRequest $request, $id) {
-        $player = Player::findOrFail($id);
-
-        $player->fill(Input::all());
-        $player->save();
-        return Redirect::to('players/' . $player->id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+    	$player = Player::find($id);
+    	$characters = $player->characters;
+    	
+    	$data['player'] = $player;
+    	$data['characters'] = $characters;
+    	
+        return view('playerInfo', $data);
     }
 
-    public function create() {
-
-        // TODO (mark): redo this section to just pull in the states correctly
-        $states = State::all(array('code', 'name'));
-        $newStates = array();
-        foreach ($states as $state) {
-            $newStates[$state['code']] = $state['name'];
-        }
-
-        $data = array(
-            'states' => $newStates
-        );
-        return view('newPlayer', $data);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+    	$player = Player::findOrFail($id);
+    	
+    	$data = [
+    		'player' => $player
+    	];
+    	
+    	return view('editPlayer', $data);
     }
 
-    // TODO: eventually convert to StorePlayerRequest for validation
-    public function store(Player $player) {
-        $rules = array(
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'email' => 'email',
-            'zip' => 'digits:5',
-            'service_points' => 'integer|between:0,1000',
-            'event_credits' => 'integer|between:0,1000'
-        );
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdatePlayer $request, $id)
+    {
+    	$player = Player::findOrFail($id);
+    	$player->fill(Input::all());
+    	
+    	$player->save();
+    	
+    	return Redirect::to('players/' . $player->id);
+    }
 
-        $validator = Validator::make(Input::all(), $rules);
-
-        if ($validator->fails()) {
-            $messages = $validator->messages();
-            return Redirect::route('players.create')->withErrors($messages)->withInput(Input::all());
-        }
-        else {
-            $player->fill(Input::all());
-            $player->save();
-            return Redirect::to('players/' . $player->id);
-        }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

@@ -3,18 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-use Gbrock\Table\Traits\Sortable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Character extends Model
 {
-    protected $guarded = ['id'];
-
-    use Sortable;
-    protected $sortable = ['character_name'];
-
-    public function player()
-    {
-        return $this->belongsTo('App\Player');
-    }
+	use SoftDeletes;
+	
+	protected $dates = ['deleted_at'];
+	
+	protected $fillable = ['player_id', 'character_name', 'race_id', 'build_unspent', 'body', 'deaths', 'pre', 'end', 'dex', 'ration', 'last_played', 'rp_points'];
+	
+	public function player()
+	{
+		return $this->belongsTo('App\Player');
+	}
+	
+	public function race()
+	{
+		return $this->hasOne('App\Race', 'id', 'race_id');
+	}
 }

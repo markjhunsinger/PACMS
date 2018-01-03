@@ -3,12 +3,18 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                	<div id="race_div"></div>
+                    @piechart('Races', 'race_div')
+                    
+                    <div style="margin-top:20px"></div>
+                    
+                    <div id="sphere_div"></div>
+                    @columnchart('Spheres', 'sphere_div')
                 </div>
             </div>
         </div>
